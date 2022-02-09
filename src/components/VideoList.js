@@ -6,7 +6,7 @@ export default class VideoList extends React.Component {
         return (
             <div className='ui relaxed divided list'>
                 {this.props.videos.map((video) => (
-                    <Video video={video} setSelectedVideo={this.props.setSelectedVideo} />
+                    <Video key={video.id.videoId} video={video} setSelectedVideo={this.props.setSelectedVideo} />
                 ))}
             </div>
         );

@@ -8,9 +8,12 @@ export default class App extends React.Component {
         videos: [],
         selectedVideo: null
     };
+    componentDidMount(){
+        this.handleSearch('trending');
+    }
 
     setSelectedVideo = (video) => {
-        this.setState({selectedVideo:video});
+        this.setState({ selectedVideo: video });
     };
     handleSearch = (searchTerm) => {
         Youtube.get('/search', {
@@ -20,15 +23,23 @@ export default class App extends React.Component {
         })
             .then((res) => res.data.items)
             .then((res) => {
-                this.setState({ videos: res });
+                this.setState({ videos: res,selectedVideo:res[0] });
             });
     };
     render() {
         return (
             <div className='ui container'>
                 <Search onSearch={this.handleSearch} />
-                <VideoDetail video={this.state.selectedVideo} />
-                <VideoList videos={this.state.videos} setSelectedVideo={this.setSelectedVideo} />
+                <div className='ui grid'>
+                    <div className='ui row'>
+                        <div className='eleven wide column'>
+                            <VideoDetail video={this.state.selectedVideo} />
+                        </div>
+                        <div className='five wide column'>
+                            <VideoList videos={this.state.videos} setSelectedVideo={this.setSelectedVideo} />
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
